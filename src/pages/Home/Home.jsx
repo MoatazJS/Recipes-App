@@ -25,7 +25,7 @@ export default function RecipeApp() {
   function handleViewRecipe() {}
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
       {/* Sidebar */}
       <Sidebar
         categories={categories}
@@ -33,14 +33,14 @@ export default function RecipeApp() {
       />
 
       {/* Main content */}
-      <main className="flex-1 p-6">
+      <main className="ml-64 p-6">
         <h1 className="text-2xl font-bold mb-6">Meals</h1>
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {meals.map((meal) => (
             <MealCard
+              handleViewRecipe={handleViewRecipe}
               key={meal.idMeal}
               meal={meal}
-              onViewRecipe={handleViewRecipe}
             />
           ))}
         </div>
