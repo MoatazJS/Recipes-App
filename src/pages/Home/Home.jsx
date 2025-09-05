@@ -1,4 +1,4 @@
-import Sidebar from "../../components/SideBar";
+import Sidebar from "../../components/Sidebar";
 import MealCard from "../../components/MealCard";
 import { useQuery } from "@tanstack/react-query";
 import { getDefaultMealsApi } from "../../services/ApiServices";
