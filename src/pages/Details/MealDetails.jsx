@@ -12,7 +12,15 @@ export default function MealDetails() {
   const [meal, setMeal] = useState(null);
 
   useEffect(() => {
-    getMealDetailsApi(id);
+    async function getSelectedRecipe() {
+      try {
+        const res = await getMealDetailsApi(id);
+        setMeal(res.data.meals[0]);
+      } catch (err) {
+        console.error("Error fetching meal details:", err);
+      }
+    }
+    getSelectedRecipe();
   }, [id]);
 
   if (!meal) {
