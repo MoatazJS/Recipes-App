@@ -4,7 +4,7 @@ export default function HeroSection({ meal }) {
       <img
         src={meal.strMealThumb}
         alt={meal.strMeal}
-        className="w-full h-full object-cover"
+        className="w-full max-h-80 object-cover rounded-xl shadow-md mb-6 sm:max-h-[28rem]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex items-end">
         <div className="p-6 md:p-10 text-white">

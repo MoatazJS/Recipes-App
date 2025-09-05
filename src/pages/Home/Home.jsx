@@ -5,7 +5,6 @@ import { getDefaultMealsApi } from "../../services/ApiServices";
 import { useState } from "react";
 
 export default function RecipeApp() {
-  // Fetch default meals
   const {
     data: defaultMeals,
     error,
@@ -15,9 +14,9 @@ export default function RecipeApp() {
     queryFn: getDefaultMealsApi,
     select: (res) => res.data.meals,
   });
-
+  const [activeCategory, setActiveCategory] = useState("Beef");
   const [meals, setMeals] = useState(null);
-  const [activeCategory, setActiveCategory] = useState(null);
+
   const handleCategoryMeals = (meals, category) => {
     setMeals(meals);
     setActiveCategory(category);
@@ -40,13 +39,16 @@ export default function RecipeApp() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen flex">
       {/* Sidebar */}
-      <Sidebar handleCategoryMeals={handleCategoryMeals} />
+      <Sidebar
+        handleCategoryMeals={handleCategoryMeals}
+        activeCategory={activeCategory}
+      />
 
       {/* Main content */}
-      <main className="ml-64 p-6">
-        <h1 className="text-2xl font-bold mb-6">
+      <main className="flex-1 p-6">
+        <h1 className="text-4xl font-bold mb-6 text-center text-green-700">
           {activeCategory ? activeCategory : "Beef"}
         </h1>
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

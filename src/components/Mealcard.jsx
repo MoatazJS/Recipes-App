@@ -15,7 +15,7 @@ export default function MealCard({ meal }) {
         <div className="flex-grow" />
         <button
           onClick={() => navigate(`/meal/${meal.idMeal}`)}
-          className="w-full bg-green-500 text-white py-2 rounded-xl hover:bg-green-600 transition"
+          className="w-full bg-green-500 cursor-pointer text-white py-2 rounded-xl hover:bg-green-600 transition"
         >
           View Recipe
         </button>

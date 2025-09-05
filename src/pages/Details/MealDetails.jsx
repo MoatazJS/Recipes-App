@@ -45,7 +45,7 @@ export default function MealDetails() {
 
       {/* Content*/}
       <div className="w-full px-6 py-10">
-        <div className="grid md:grid-cols-4 gap-10 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 lg:gap-10">
           {/* Ingredients */}
           <div className="md:col-span-1 md:sticky md:top-6 self-start">
             <Ingredient ingredients={ingredients} />
@@ -60,7 +60,7 @@ export default function MealDetails() {
 
       {/* Actions */}
       <div className="w-full px-6 pb-10">
-        <div className="max-w-[90rem] mx-auto">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
           <ActionButtons
             onBack={() => navigate(-1)}
             youtubeUrl={meal.strYoutube}
