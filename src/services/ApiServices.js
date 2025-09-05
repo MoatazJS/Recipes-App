@@ -12,3 +12,6 @@ export function getMealsByCategoryApi(category) {
     `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
   );
 }
+export function getMealDetailsApi(id) {
+  axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+}
