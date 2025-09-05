@@ -1,47 +1,47 @@
-"use client";
-import { useEffect, useState } from "react";
 import Sidebar from "../../components/SideBar";
 import MealCard from "../../components/MealCard";
+import { useQuery } from "@tanstack/react-query";
+import { getDefaultMealsApi } from "../../services/ApiServices";
 
 export default function RecipeApp() {
-  const [categories, setCategories] = useState([]);
-  const [meals, setMeals] = useState([]);
+  // Fetch default meals
+  const {
+    data: meals,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: "DefaultMeal",
+    queryFn: getDefaultMealsApi,
+    select: (res) => res.data.meals,
+  });
 
-  // Fetch categories + default meals (Beef as example)
-  useEffect(() => {
-    fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
-      .then((res) => res.json())
-      .then((data) => setCategories(data.categories));
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-lg font-semibold">Loading meals...</p>
+      </div>
+    );
+  }
 
-    fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef")
-      .then((res) => res.json())
-      .then((data) => setMeals(data.meals));
-  }, []);
-
-  // Handle selecting a category
-  function handleCategorySelect() {}
-
-  // Handle clicking "View Recipe"
-  function handleViewRecipe() {}
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500 font-semibold">Failed to load meals</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
       {/* Sidebar */}
-      <Sidebar
-        categories={categories}
-        onSelectCategory={handleCategorySelect}
-      />
+      <Sidebar />
 
       {/* Main content */}
       <main className="ml-64 p-6">
         <h1 className="text-2xl font-bold mb-6">Meals</h1>
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {meals.map((meal) => (
-            <MealCard
-              handleViewRecipe={handleViewRecipe}
-              key={meal.idMeal}
-              meal={meal}
-            />
+          {(meals ?? []).map((meal) => (
+            <MealCard key={meal.idMeal} meal={meal} />
           ))}
         </div>
       </main>

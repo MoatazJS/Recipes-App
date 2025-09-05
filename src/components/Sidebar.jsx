@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import getAllCategoriesApi from "../services/ApiServices";
-
-export default function Sidebar({ onSelectCategory }) {
+import { getAllCategoriesApi } from "../services/ApiServices";
+export default function Sidebar() {
   const { data, error, isLoading } = useQuery({
     queryKey: ["allCategories"],
     queryFn: getAllCategoriesApi,
-    select: (res) => res.data.meals, // this gives an array
+    select: (res) => res.data.meals,
   });
 
   if (isLoading) {
@@ -36,10 +35,7 @@ export default function Sidebar({ onSelectCategory }) {
       <ul className="space-y-2">
         {(data ?? []).map((meal, idx) => (
           <li key={idx}>
-            <button
-              onClick={() => onSelectCategory?.(meal.strCategory)}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-green-100 transition"
-            >
+            <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-green-100 transition">
               {meal.strCategory}
             </button>
           </li>
