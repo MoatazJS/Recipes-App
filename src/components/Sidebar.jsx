@@ -1,11 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllCategoriesApi } from "../services/ApiServices";
-export default function Sidebar() {
+import {
+  getAllCategoriesApi,
+  getMealsByCategoryApi,
+} from "../services/ApiServices";
+export default function Sidebar({ handleCategoryMeals }) {
   const { data, error, isLoading } = useQuery({
     queryKey: ["allCategories"],
     queryFn: getAllCategoriesApi,
     select: (res) => res.data.meals,
   });
+
+  async function handleCategoryChange(category) {
+    try {
+      const response = await getMealsByCategoryApi(category);
+      // send the meals back to parent
+      handleCategoryMeals?.(response.data.meals, category);
+    } catch (err) {
+      console.error("Error fetching category:", category, err);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -35,7 +48,10 @@ export default function Sidebar() {
       <ul className="space-y-2">
         {(data ?? []).map((meal, idx) => (
           <li key={idx}>
-            <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-green-100 transition">
+            <button
+              onClick={() => handleCategoryChange(meal.strCategory)}
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-green-100 transition"
+            >
               {meal.strCategory}
             </button>
           </li>
